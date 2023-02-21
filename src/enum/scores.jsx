@@ -1,5 +1,10 @@
 const scores = {
     111: 7,
+    222: 5,
+    333: 3,
+    444: 0,
+    555: 5,
+    666: 6,
 
     121: 2,
     211: 2,
@@ -20,12 +25,6 @@ const scores = {
     161: 6,
     611: 6,
     116: 6,
-
-    222: 5,
-    333: 3,
-    444: 0,
-    555: 5,
-    666: 6,
 
     123: 7,
     132: 7,
@@ -76,4 +75,11 @@ const scores = {
     214: 9,
     124: 9,
     142: 9
+}
+
+const calculerScore = (lance, firstStrike, streak) => {
+    let scoreToReturn = scores[lance];
+    if(firstStrike) scoreToReturn += 1;
+    if(streak > 0) scoreToReturn += streak;
+    return scoreToReturn;
 }
