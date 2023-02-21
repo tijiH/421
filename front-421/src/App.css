@@ -1,5 +1,11 @@
 .App {
-  text-align: center;
+    width: 375px; /* largeur de l'iPhone X */
+    height: 812px; /* hauteur de l'iPhone X */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
 }
 
 .App-logo {
