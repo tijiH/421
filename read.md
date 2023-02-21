@@ -2,4 +2,4 @@
 
 ### Projet
 
-Réaliser une application 421 en ReactJS
+Réaliser une application 421 en Nextjs
