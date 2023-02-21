@@ -1,3 +1,4 @@
+/** MAP [KEY,VALUE] AVEC [COMBINAISON DE DES, SCORE] **/
 const scores = {
     111: 7,
     222: 5,
@@ -77,6 +78,12 @@ const scores = {
     142: 9
 }
 
+/** FONCTION DE CALCUL DES SCORES AVEC
+ * @param lance : String => combinaison de dés
+ * @param firstStrike : Boolean => premier lancé
+ * @param streak : Boolean => le joueur est en streak
+ * @return scoreToReturn : Double
+ * **/
 const calculerScore = (lance, firstStrike, streak) => {
     let scoreToReturn = scores[lance];
     if(firstStrike) scoreToReturn += 1;
