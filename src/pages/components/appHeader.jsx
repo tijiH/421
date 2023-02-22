@@ -1,14 +1,18 @@
-import { TabView, TabPanel } from 'primereact/tabview';
+import React from 'react'
+import Router from 'next/router'
 
 const AppHeader = () => {
+
+    const handleClick = (e) => {
+        console.log(e.target.id)
+        console.log("click")
+        Router.push('/')
+    }
+
     return (
-        <div className="header">
-            <h1 className="header-title">421</h1>
+        <div className="header justify-content-center select-none"> 
+            <h1 className="header-title cursor-pointer" onClick={handleClick}>421</h1>
             <p className="header-by mr-2 mt-5">by Kush Crew</p>
-            {/* <TabView>
-                <TabPanel header="Jeu"></TabPanel>
-                <TabPanel header="Score"></TabPanel>
-            </TabView> */}
         </div>
     );
 }

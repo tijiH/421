@@ -1,11 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const routes = useRouter()
+
   return (
     <>
       <Head>
@@ -15,6 +16,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="">
+        <div className='p-card p-2 m-8 text-center' onClick={() => routes.push("/enterPlayersName")}>
+            <h2>Jeu</h2>
+        </div>
+        <div className='p-card p-2 m-8 text-center'>
+          <h2>Score</h2>
+        </div>
       </main>
     </>
   )
