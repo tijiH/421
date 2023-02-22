@@ -1,9 +1,9 @@
 {
-  "name": "421_tiji",
-  "version": "0.1.0",
+  "name": "421",
+  "version": "1.0.0-SNAPSHOT",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 420",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
