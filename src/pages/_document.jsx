@@ -1,16 +1,12 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import AppHeader from './components/appHeader'
-import AppFooter from './components/appFooter'
 
 export default function Document() {
 
   return (
     <Html lang="en">
       <Head />
-      <body style={{margin: "0px"}}>
-        <AppHeader/>
+      <body className='m-0'>
         <Main />
-        <AppFooter/>
         <NextScript />
       </body>
     </Html>

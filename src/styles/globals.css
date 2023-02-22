@@ -8,7 +8,6 @@
   background-color: var(--light-purple);
 
   font-family: 'm20', sans-serif;
-  margin: 0px;
 
   --primary-black: rgba(34, 39, 46);
   --blue: rgba(83, 155, 245);
@@ -22,6 +21,10 @@
 @font-face {
   font-family: 'm20';
   src: local('m20'), url(../fonts/m20.TTF) format('truetype');
+}
+
+.text-color-black {
+  color: var(--primary-black);
 }
 
 /* HEADER */
@@ -43,6 +46,11 @@
 
 /* BODY */
 
+.p-card:hover {
+  background: #e8e8e8 !important;
+  transition: 200ms ease-out;
+}
+
 .p-button {
   background: var(--primary-black) !important;
   color: var(--light-purple) !important;
@@ -57,6 +65,7 @@
 
 .p-inputtext {
   padding: 10px !important;
+  font-family: 'm20', sans-serif !important;
 }
 .p-inputtext::placeholder {
   color: #00000030 !important;

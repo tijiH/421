@@ -1,11 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
+import Router from 'next/router';
 
 const AppFooter = () => {
     
     return (
         <div className="footer footer-border">
-            <Link href='/about' className=''>About</Link>
+            <p className='underline' onClick={() => Router.push('/about')}>About</p>
         </div>
     );
 }
