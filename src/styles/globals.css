@@ -23,9 +23,15 @@
   src: local('m20'), url(../fonts/m20.TTF) format('truetype');
 }
 
+.p-component {
+  font-family: 'm20', sans-serif !important;
+}
+
 .text-color-black {
   color: var(--primary-black);
 }
+
+
 
 /* HEADER */
 .header {
@@ -46,12 +52,25 @@
 
 /* BODY */
 
-.p-card:hover {
-  background: #e8e8e8 !important;
-  transition: 200ms ease-out;
+.container {
+  display: grid;
+}
+
+.container-bottom {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  /* grid-template-columns: 100px 100px 100px; */
+  /* grid-template-rows: auto; */
+}
+
+.p-card-player {
+  text-align: center;
+  width: 70% !important;
 }
 
 .p-button {
+  font-family: 'm20', sans-serif;
   background: var(--primary-black) !important;
   color: var(--light-purple) !important;
 }
