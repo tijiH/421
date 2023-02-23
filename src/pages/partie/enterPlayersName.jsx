@@ -4,13 +4,13 @@ import { InputText } from 'primereact/inputtext';
 import Router from 'next/router';
 
 const EnterPlayersName = () => {
-    const inputArr = [{ value: "", scoreTotal: 0, cartons: 0, streak: 0 }];
+    const inputArr = [{ value: "", scoreTotal: 0, cartons: "", streak: 0 }];
     const [joueurs, setJoueurs] = useState(inputArr);
 
     const addInput = () => {
         if (joueurs.length > 9) return;
         setJoueurs(s => {
-            return [...s, { value: "", scoreTotal: 0, cartons: 0, streak: 0 }];
+            return [...s, { value: "", scoreTotal: 0, cartons: "", streak: 0 }];
         });
     };
 
