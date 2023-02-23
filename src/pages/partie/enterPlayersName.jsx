@@ -4,26 +4,26 @@ import { InputText } from 'primereact/inputtext';
 import Router from 'next/router';
 
 const EnterPlayersName = () => {
-    const inputArr = [{ value: "", score: 0, cartons: 0 }];
-    const [arr, setArr] = useState(inputArr);
+    const inputArr = [{ value: "", scoreTotal: 0, cartons: 0, streak: 0 }];
+    const [joueurs, setJoueurs] = useState(inputArr);
 
     const addInput = () => {
-        if (arr.length > 9) return;
-        setArr(s => {
-            return [...s, { value: "", score: 0, cartons: 0 }];
+        if (joueurs.length > 9) return;
+        setJoueurs(s => {
+            return [...s, { value: "", scoreTotal: 0, cartons: 0, streak: 0 }];
         });
     };
 
     const removeInput = () => {
-        if (arr.length === 1) return;
-        setArr(arr.slice(0, -1))
+        if (joueurs.length === 1) return;
+        setJoueurs(joueurs.slice(0, -1))
     };
 
     const handleChange = e => {
         e.preventDefault();
         const index = e.target.id;
 
-        setArr(s => {
+        setJoueurs(s => {
             const newArr = s.slice();
             newArr[index].value = e.target.value;
             return newArr;
@@ -34,7 +34,7 @@ const EnterPlayersName = () => {
         e.preventDefault();
         Router.push({
             pathname: '/partie/partie',
-            query: { joueurs: JSON.stringify(arr) }
+            query: { joueurs: JSON.stringify(joueurs) }
         })
     }
 
@@ -47,7 +47,7 @@ const EnterPlayersName = () => {
                     <Button icon="pi pi-minus" aria-label="Filter" onClick={removeInput} />
                 </div>
                 <form className='flex flex-column align-items-center gap-2' onSubmit={submitPlayers} method='post'>
-                    {arr.map((item, i) => {
+                    {joueurs.map((item, i) => {
                         return (
                             <InputText
                                 key={i}
@@ -65,7 +65,7 @@ const EnterPlayersName = () => {
                         );
                     })}
                     <button type='submit' className='p-button'>
-                        Jouer
+                        CA FUME !
                     </button>
                 </form>
             </div>

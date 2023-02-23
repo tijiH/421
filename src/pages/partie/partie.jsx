@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Partie = () => {
     const [visible, setVisible] = useState(true)
-    const [joueurs, setJoueurs] = useState([{ value: "", score: 0, cartons: 0 }])
+    const [joueurs, setJoueurs] = useState([{ value: "", scoreTotal: 0, cartons: 0 }])
     const [selectedJoueur, setSelectedJoueur] = useState(joueurs[0])
     const router = useRouter()
 
