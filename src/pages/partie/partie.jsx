@@ -1,20 +1,29 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Dialog } from "primereact/dialog";
-import { Dropdown } from 'primereact/dropdown';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {Dialog} from "primereact/dialog";
+import {Dropdown} from 'primereact/dropdown';
 import Image from "next/image";
 
 const Partie = () => {
     const [visible, setVisible] = useState(true)
-    const [joueurs, setJoueurs] = useState([{ value: "", scoreTotal: 0, cartons: [""], streak: 0 }])
+    const [joueurs, setJoueurs] = useState([{
+        value: "",
+        scoreTotal: 0,
+        cartons: [""],
+        streak: 0,
+        peutFumer: true
+    }])
+    const [peutFumerCeTour, setPeutFumerCeTour] = useState(true)
     const [selectedJoueur, setSelectedJoueur] = useState(joueurs[0])
     const router = useRouter()
+
 
     useEffect(() => {
         setJoueurs(JSON.parse(router.query.joueurs))
     }, [router.query]);
+
 
     const nextPlayer = () => {
         joueurs.map((joueur, index) => {
@@ -22,21 +31,38 @@ const Partie = () => {
                 joueur.cartons = selectedJoueur.cartons
                 if (index === joueurs.length - 1) {
                     setSelectedJoueur(joueurs[0])
+                    setPeutFumerCeTour(joueurs[0].peutFumer)
+
                 } else {
                     setSelectedJoueur(joueurs[index + 1])
+                    setPeutFumerCeTour(joueurs[index + 1].peutFumer)
                 }
             }
         })
     }
 
     const addCarton = (couleur) => {
-        setSelectedJoueur(joueur => {
-            return {
-                ...joueur,
-                cartons: [...joueur.cartons, couleur === "Jaune" ? "J" : "R"]
-            }
-        })
+        if (peutFumerCeTour === true) {
+            setSelectedJoueur(joueur => {
+                return {
+                    ...joueur,
+                    cartons: [...joueur.cartons, couleur === "Jaune" ? "J" : "R"],
+                        peutFumer: !(couleur === "Rouge" || (couleur === "Jaune" && joueur.cartons.filter(carton => carton === "J").length % 2 === 1))
+                }
+            })
+            setPeutFumerCeTour(false)
+        } else {
+            setSelectedJoueur(joueur => {
+                return {
+                    ...joueur,
+                    cartons: [...joueur.cartons, couleur === "Jaune" ? "J" : "R"],
+                    peutFumer: false
+                }
+            })
+        }
+
     }
+
 
     return (
         <>
@@ -48,11 +74,13 @@ const Partie = () => {
                             <Dropdown
                                 className="text-xs mt-3"
                                 options={joueurs} value={selectedJoueur.value} onChange={(e) => {
-                                    setSelectedJoueur(joueurs.find(joueur => joueur.value === e.value))
-                                }}
+                                setSelectedJoueur(joueurs.find(joueur => joueur.value === e.value))
+                            }}
                                 optionLabel="value" placeholder="Joueurs"
                             />
-                            <button className="p-button p-button-success mt-4" onClick={() => setVisible(false)}>Valider</button>
+                            <button className="p-button p-button-success mt-4"
+                                    onClick={() => setVisible(false)}>Valider
+                            </button>
                         </div>
                     </div>
                 }
@@ -79,6 +107,7 @@ const Partie = () => {
                         <Column field="streak" header="Streak"></Column>
                     </DataTable>
                 </div>
+                {peutFumerCeTour ? <p>Ce man peut fumer</p> : <p>Ce man ne peut pas fumer</p>}
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
                     <div className="ml-2">
                         <button className="p-button w-5" onClick={() => addCarton("Jaune")}>
