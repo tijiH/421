@@ -6,9 +6,11 @@ import Image from "next/image";
 
 const Partie = () => {
     const [visible, setVisible] = useState(true)
-    const [joueurs, setJoueurs] = useState([{ value: "", scoreTotal: 0, cartons: "", streak: 0 }])
+    const [joueurs, setJoueurs] = useState([{ value: "", scoreTotal: 0, cartons: ["J","R", "J", "J", "R"], streak: 0 }])
     const [selectedJoueur, setSelectedJoueur] = useState(joueurs[0])
     const router = useRouter()
+
+    console.log(selectedJoueur)
 
     useEffect(() => {
         setJoueurs(JSON.parse(router.query.joueurs))
@@ -51,11 +53,16 @@ const Partie = () => {
                 <div className="p-card p-card-player" hidden={visible}>
                     <h3>{selectedJoueur.value}</h3>
                 </div>
-                {selectedJoueur.cartons % 2 === 0 ?
-                    <Image className="mt-2" priority src="/carton_jaune.png" alt='logo' width={40} height={40} hidden={visible}/>
-                :
-                    <Image className="mt-2" priority src="/carton_rouge.png" alt='logo' width={40} height={40} hidden={visible}/>
+                <div id="divCartons">
+                {selectedJoueur.cartons.length > 0 ?
+                    selectedJoueur.cartons.map((carton, index) => {
+                        if(carton === "J") return (<Image className="mt-2" priority src="/carton_jaune.png" alt='logo' width={40} height={40} hidden={visible}/>)
+                        if(carton === "R") return (<Image className="mt-2" priority src="/carton_rouge.png" alt='logo' width={40} height={40} hidden={visible}/>)
+                    })
+                    :
+                    <p>Ce joueur est clean... BIZARRE</p>
                 }
+                </div>
                 <div className="flex container-bottom gap-2">
                     <button className="p-button col-6 h-fit" onClick={() => {selectedJoueur.cartons += 1; console.log(selectedJoueur)}}>carton</button>
                     <button className="p-button col-6 h-fit" onClick={nextPlayer}>Suivant</button>
