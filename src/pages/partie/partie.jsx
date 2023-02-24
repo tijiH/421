@@ -32,15 +32,15 @@ const Partie = () => {
                 header={
                     <div>
                         <p className='text-center text-color-black text-sm'>Selectionnez le Joueur qui commence</p>
-                        <div className="flex flex-column align-items-center gap-2">
+                        <div className="flex flex-column align-items-center">
                             <Dropdown
-                                className="text-xs"
+                                className="text-xs mt-3"
                                 options={joueurs} value={selectedJoueur.value} onChange={(e) => {
                                     setSelectedJoueur(joueurs.find(joueur => joueur.value === e.value))
                                 }}
                                 optionLabel="value" placeholder="Joueurs"
                             />
-                            <button className="p-button p-button-success" onClick={() => setVisible(false)}>Valider</button>
+                            <button className="p-button p-button-success mt-4" onClick={() => setVisible(false)}>Valider</button>
                         </div>
                     </div>
                 }

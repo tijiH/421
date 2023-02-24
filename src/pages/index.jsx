@@ -17,10 +17,10 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-column align-items-center gap-2">
-        <div className='p-card w-5 p-2 m-8 text-center select-none' onClick={handleClick}>
+        <div className='p-card w-5 p-2 m-8 text-center select-none cursor-pointer' onClick={handleClick}>
           <h2>Sans des</h2>
         </div>
-        <div className='p-card w-5 p-2 m-8 text-center select-none'>
+        <div className='p-card w-5 p-2 m-8 text-center select-none cursor-pointer'>
           <h2>Avec des</h2>
         </div>
         <Dialog

@@ -65,7 +65,7 @@ const EnterPlayersName = () => {
                         );
                     })}
                     <button type='submit' className='p-button'>
-                        CA FUME !
+                        CA FUME
                     </button>
                 </form>
             </div>
