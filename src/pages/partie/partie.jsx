@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from 'primereact/dropdown';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import Image from "next/image";
 
 const Partie = () => {
     const [visible, setVisible] = useState(true)
-    const [joueurs, setJoueurs] = useState([{ value: "", scoreTotal: 0, cartons: ["J","R", "J", "J", "R"], streak: 0 }])
+    const [joueurs, setJoueurs] = useState([{ value: "", scoreTotal: 0, cartons: [""], streak: 0 }])
     const [selectedJoueur, setSelectedJoueur] = useState(joueurs[0])
     const router = useRouter()
-
-    console.log(selectedJoueur)
 
     useEffect(() => {
         setJoueurs(JSON.parse(router.query.joueurs))
@@ -18,7 +18,8 @@ const Partie = () => {
 
     const nextPlayer = () => {
         joueurs.map((joueur, index) => {
-            if (selectedJoueur === joueur) {
+            if (selectedJoueur.value === joueur.value) {
+                joueur.cartons = selectedJoueur.cartons
                 if (index === joueurs.length - 1) {
                     setSelectedJoueur(joueurs[0])
                 } else {
@@ -28,7 +29,7 @@ const Partie = () => {
         })
     }
 
-    const addCarton = (index, couleur) => {
+    const addCarton = (couleur) => {
         setSelectedJoueur(joueur => {
             return {
                 ...joueur,
@@ -59,11 +60,11 @@ const Partie = () => {
                 closable={false}
             />
             <div className="flex flex-column align-items-center mt-2">
-                <div className="p-card p-card-player" hidden={visible}>
+                <div id="divNomJoueurs" className="p-card p-card-player" hidden={visible}>
                     <h3>{selectedJoueur.value}</h3>
                 </div>
                 <div id="divCartons">
-                {selectedJoueur.cartons.length > 0 ?
+                {selectedJoueur.cartons.length > 1 ?
                     selectedJoueur.cartons.map((carton, index) => {
                         if(carton === "J") return (<Image className="mt-2" priority src="/carton_jaune.png" alt='logo' width={40} height={40} hidden={visible}/>)
                         if(carton === "R") return (<Image className="mt-2" priority src="/carton_rouge.png" alt='logo' width={40} height={40} hidden={visible}/>)
@@ -72,9 +73,24 @@ const Partie = () => {
                     <p>Ce joueur est clean... BIZARRE</p>
                 }
                 </div>
-                <div className="flex container-bottom gap-2">
-                    <button className="p-button col-6 h-fit" onClick={() => addJaune(joueurs[0], "Jaune")}>carton</button>
-                    <button className="p-button col-6 h-fit" onClick={nextPlayer}>Suivant</button>
+                <div id="divDataTable" className="mt-2">
+                    <DataTable value={joueurs} >
+                        <Column field="value" header="Joueur"></Column>
+                        <Column field="streak" header="Streak"></Column>
+                    </DataTable>
+                </div>
+                <div id="divButtons" className="flex container-bottom justify-content-between w-full">
+                    <div className="ml-2">
+                        <button className="p-button w-5" onClick={() => addCarton("Jaune")}>
+                            <Image className="mr-3" priority src="/carton_jaune.png" alt='logo' width={30} height={30}/>
+                        </button>
+                        <button className="p-button w-5 ml-2" onClick={() => addCarton("PasJaune")}>
+                            <Image priority src="/carton_rouge.png" alt='logo' width={30} height={30}/>
+                        </button>
+                    </div>
+                    <div className="flex justify-content-center mr-2 mt-2">
+                        <button className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
+                    </div>
                 </div>
             </div>
         </>

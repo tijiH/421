@@ -92,6 +92,10 @@
   color: #00000030 !important;
 }
 
+.p-datatable-wrapper {
+  border-radius: 6px !important;
+}
+
 /* FOOTER */
 
 .footer {
