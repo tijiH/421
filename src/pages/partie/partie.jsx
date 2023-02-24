@@ -5,6 +5,7 @@ import {useRouter} from "next/router";
 import {Dialog} from "primereact/dialog";
 import {Dropdown} from 'primereact/dropdown';
 import Image from "next/image";
+import {Message} from "primereact/message";
 
 const Partie = () => {
     const [visible, setVisible] = useState(true)
@@ -42,15 +43,21 @@ const Partie = () => {
     }
 
     const addCarton = (couleur) => {
+        let caTireOuPas = (
+            couleur === "Rouge" ?
+            false :
+            (couleur === "Jaune" && selectedJoueur.cartons.filter(carton => carton === "J").length % 2 === 0)
+        )
+
         if (peutFumerCeTour === true) {
             setSelectedJoueur(joueur => {
                 return {
                     ...joueur,
                     cartons: [...joueur.cartons, couleur === "Jaune" ? "J" : "R"],
-                        peutFumer: !(couleur === "Rouge" || (couleur === "Jaune" && joueur.cartons.filter(carton => carton === "J").length % 2 === 1))
+                        peutFumer: caTireOuPas
                 }
             })
-            setPeutFumerCeTour(false)
+            setPeutFumerCeTour(caTireOuPas)
         } else {
             setSelectedJoueur(joueur => {
                 return {
@@ -92,7 +99,7 @@ const Partie = () => {
                     <h3>{selectedJoueur.value}</h3>
                 </div>
                 <div id="divCartons">
-                {selectedJoueur.cartons.length > 1 ?
+                {selectedJoueur.cartons.length > 0 ?
                     selectedJoueur.cartons.map((carton, index) => {
                         if(carton === "J") return (<Image className="mt-2" priority src="/carton_jaune.png" alt='logo' width={40} height={40} hidden={visible}/>)
                         if(carton === "R") return (<Image className="mt-2" priority src="/carton_rouge.png" alt='logo' width={40} height={40} hidden={visible}/>)
@@ -107,13 +114,13 @@ const Partie = () => {
                         <Column field="streak" header="Streak"></Column>
                     </DataTable>
                 </div>
-                {peutFumerCeTour ? <p>Ce man peut fumer</p> : <p>Ce man ne peut pas fumer</p>}
+                <div className="p-5"> {peutFumerCeTour ? <Message severity="success" text="Ce man peut fumer" /> : <Message severity="error" text="Ce man ne peut pas fumer" />} </div>
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
                     <div className="ml-2">
                         <button className="p-button w-5" onClick={() => addCarton("Jaune")}>
                             <Image className="mr-3" priority src="/carton_jaune.png" alt='logo' width={30} height={30}/>
                         </button>
-                        <button className="p-button w-5 ml-2" onClick={() => addCarton("PasJaune")}>
+                        <button className="p-button w-5 ml-2" onClick={() => addCarton("Rouge")}>
                             <Image priority src="/carton_rouge.png" alt='logo' width={30} height={30}/>
                         </button>
                     </div>
