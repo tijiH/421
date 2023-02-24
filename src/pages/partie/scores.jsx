@@ -13,20 +13,20 @@ const Scores = () => {
         streak: 0,
         peutFumer: true
     }]);
-    const [winner, setWinner] = useState("Eliot");
+    const [winner, setWinner] = useState("");
 
     useEffect(() => {
         setJoueurs(JSON.parse(router.query.joueurs))
-        findWinner();
+        findWinner(JSON.parse(router.query.joueurs))
     }, [router.query]);
 
-    const findWinner = () => {
+    const findWinner = (joueurs) => {
         let bestScore = 0;
 
         joueurs.forEach(joueur => {
             if (joueur.scoreTotal > bestScore) {
-                bestScore = joueur.score
-                setWinner(joueur.value);
+                bestScore = joueur.scoreTotal
+                setWinner(joueur.value)
             }
         })
     }
@@ -37,9 +37,9 @@ const Scores = () => {
                 <Image priority src="/couronne.png" alt='logo' width={80} height={80}/>
                 <h1 className="mt-0">{winner}</h1>
             </div>
-            <DataTable value={joueurs} >
+            <DataTable value={joueurs}>
                 <Column field="value" header="Joueur" />
-                <Column field="scoreTotal" header="Score total" />
+                <Column field="scoreTotal" header="Score" />
                 <Column field="streak" header="Streak" />
                 <Column field="cartons" header="Cartons" />
             </DataTable>

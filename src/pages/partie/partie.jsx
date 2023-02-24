@@ -12,6 +12,7 @@ import {calculerScore} from "@/fonctions/scores";
 
 const Partie = () => {
     const [visible, setVisible] = useState(true)
+    const [visibleFin, setVisibleFin] = useState(false)
     const [joueurs, setJoueurs] = useState([{
         value: "",
         scoreTotal: 0,
@@ -24,7 +25,6 @@ const Partie = () => {
     const [peutFumerCeTour, setPeutFumerCeTour] = useState(true)
     const [score, setScore] = useState(null)
     const [firstTry, setFirstTry] = useState(false)
-
 
     const router = useRouter()
 
@@ -44,11 +44,12 @@ const Partie = () => {
                 console.log(calculerScore(score, firstTry, joueur.streak), score, firstTry, joueur.streak)
                 joueur.scoreTotal += calculerScore(score, firstTry, joueur.streak)
 
-                console.log(joueur.scoreTotal)
+                console.log("score: ", joueur.scoreTotal)
 
                 joueur.peutFumer = true
                 setScore(null)
                 setPeutFumerCeTour(true)
+                setFirstTry(false)
 
                 if (index === joueurs.length - 1) {
                     setSelectedJoueur(joueurs[0])
@@ -89,6 +90,9 @@ const Partie = () => {
 
     }
 
+    const toggleDialog = () => {
+        setVisibleFin(true)
+    }
 
     return (
         <>
@@ -113,13 +117,33 @@ const Partie = () => {
                 visible={visible}
                 closable={false}
             />
+            <Dialog 
+                header={
+                <>
+                    <h3 className='text-center'>Confirmer</h3>
+                    <div className="flex gap-2">
+                        <button className="p-button p-button-success mt-2"
+                                onClick={() => setVisibleFin(false)}>Non
+                        </button>
+                        <button className="p-button p-button-success mt-2"
+                                onClick={() => router.push({
+                                    pathname: '/partie/scores',
+                                    query: { joueurs: JSON.stringify(joueurs) }                        
+                                })}>Oui
+                        </button>
+                    </div>
+                </>
+                }
+                closable={false}
+                visible={visibleFin}
+            />
             <div className="flex flex-column align-items-center mt-2">
                 <div id="divNomJoueurs" className="p-card p-card-player" hidden={visible}>
                     <h3>{selectedJoueur.value}</h3>
                 </div>
                 <div id="divCartons">
-                    {selectedJoueur.cartons.length > 0 ?
-                        selectedJoueur.cartons.map((carton, index) => {
+                    {selectedJoueur.cartons.length > 1 ?
+                        selectedJoueur.cartons.map((carton) => {
                             if (carton === "J") return (
                                 <Image className="mt-2" priority src="/carton_jaune.png" alt='logo' width={40}
                                        height={40} hidden={visible}/>)
@@ -140,27 +164,23 @@ const Partie = () => {
                 <div className="p-5"> {peutFumerCeTour ? <Message severity="success" text="Ce man peut fumer"/> :
                     <Message severity="error" text="Ce man ne peut pas fumer"/>} </div>
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
-                    <div className="ml-2">
-                        <button className="p-button w-5" onClick={() => addCarton("Jaune")}>
-                            <Image className="mr-3" priority src="/carton_jaune.png" alt='logo' width={30} height={30}/>
+                    <div className="ml-2 mb-5 flex flex-column gap-2">
+                        <button className="p-button" onClick={() => addCarton("Jaune")}>
+                            <Image className="" priority src="/carton_jaune.png" alt='logo' width={30} height={30}/>
                         </button>
-                        <button className="p-button w-5 ml-2" onClick={() => addCarton("Rouge")}>
+                        <button className="p-button" onClick={() => addCarton("Rouge")}>
                             <Image priority src="/carton_rouge.png" alt='logo' width={30} height={30}/>
                         </button>
                     </div>
-
-                    <div>
-                    <span className="p-float-label">
-                        <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}/>
-                        <label htmlFor="scoreInput">Score</label>
-                    </span>
-                        <ToggleButton onLabel="First Try 🤪" offLabel="Pas first try 😳" onIcon="pi pi-check" offIcon="pi pi-times"
-                                      checked={firstTry} onChange={(e) => setFirstTry(e.value)} />
+                    <div className='flex flex-column gap-2'>
+                            <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}
+                                placeholder="Score" size={12} maxLength={3}      />
+                            <ToggleButton onLabel="First Try" offLabel="First try" onIcon="pi pi-check" offIcon="pi pi-times"
+                                        checked={firstTry} onChange={(e) => setFirstTry(e.value)} />
                     </div>
-
-
-                    <div className="flex justify-content-center mr-2 mt-2">
+                    <div className="flex flex-column gap-2 mr-2">
                         <button className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
+                        <button className="p-button h-fit" onClick={toggleDialog}>Termine</button>
                     </div>
                 </div>
             </div>

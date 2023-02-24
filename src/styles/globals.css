@@ -61,7 +61,7 @@
 .container-bottom {
   position: absolute;
   bottom: 0;
-  height: 100px;
+  height: 125px;
   /* grid-template-columns: 100px 100px 100px; */
   /* grid-template-rows: auto; */
 }
