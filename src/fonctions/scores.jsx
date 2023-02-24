@@ -84,9 +84,9 @@ const scores = {
  * @param streak : Boolean => le joueur est en streak
  * @return scoreToReturn : Double
  * **/
-const calculerScore = (lance, firstStrike, streak) => {
+export const calculerScore = (lance, firstStrike, streak) => {
     let scoreToReturn = scores[lance];
     if(firstStrike) scoreToReturn += 1;
-    if(streak > 0) scoreToReturn += streak;
+    if(streak > 2) scoreToReturn += streak - 2;
     return scoreToReturn;
 }
