@@ -28,6 +28,15 @@ const Partie = () => {
         })
     }
 
+    const addCarton = (index, couleur) => {
+        setSelectedJoueur(joueur => {
+            return {
+                ...joueur,
+                cartons: [...joueur.cartons, couleur === "Jaune" ? "J" : "R"]
+            }
+        })
+    }
+
     return (
         <>
             <Dialog
@@ -64,7 +73,7 @@ const Partie = () => {
                 }
                 </div>
                 <div className="flex container-bottom gap-2">
-                    <button className="p-button col-6 h-fit" onClick={() => {selectedJoueur.cartons += 1; console.log(selectedJoueur)}}>carton</button>
+                    <button className="p-button col-6 h-fit" onClick={() => addJaune(joueurs[0], "Jaune")}>carton</button>
                     <button className="p-button col-6 h-fit" onClick={nextPlayer}>Suivant</button>
                 </div>
             </div>
