@@ -38,14 +38,23 @@ const Partie = () => {
 
         joueurs.map((joueur, index) => {
             if (selectedJoueur.value === joueur.value) {
+                let calcul = calculerScore(score, firstTry, joueur.streak)
 
+                console.table(
+                "calcul: ", calcul,
+                "score: ", score,
+                "first try: ", firstTry,
+                "streak: ", joueur.streak)
+                if (calcul < 0 || calcul === undefined) {
+                    joueur.streak = 0;
+                } else {
+                    joueur.streak++;
+                    joueur.scoreTotal += calcul;
+                }
+                
+                console.log("score total: ", joueur.scoreTotal)
+                
                 joueur.cartons = selectedJoueur.cartons
-                calculerScore(score, false, 0) > 0 ? joueur.streak++ : joueur.streak = 0
-                console.log(calculerScore(score, firstTry, joueur.streak), score, firstTry, joueur.streak)
-                joueur.scoreTotal += calculerScore(score, firstTry, joueur.streak)
-
-                console.log("score: ", joueur.scoreTotal)
-
                 joueur.peutFumer = true
                 setScore(null)
                 setPeutFumerCeTour(true)
@@ -105,11 +114,15 @@ const Partie = () => {
                                 className="text-xs mt-3"
                                 options={joueurs} value={selectedJoueur.value} onChange={(e) => {
                                 setSelectedJoueur(joueurs.find(joueur => joueur.value === e.value))
+
                             }}
                                 optionLabel="value" placeholder="Joueurs"
                             />
                             <button className="p-button p-button-success mt-4"
-                                    onClick={() => setVisible(false)}>Valider
+                                    onClick={(e) => {
+                                        if (!selectedJoueur.value) return;
+                                        setVisible(false)
+                                    }}>Valider
                             </button>
                         </div>
                     </div>
@@ -152,13 +165,13 @@ const Partie = () => {
                                        height={40} hidden={visible}/>)
                         })
                         :
-                        <p>Ce joueur est clean... BIZARRE</p>
+                        <p>Ce man est clean</p>
                     }
                 </div>
                 <div id="divDataTable" className="mt-2">
                     <DataTable value={joueurs}>
                         <Column field="value" header="Joueur"></Column>
-                        <Column field="streak" header="Streak"></Column>
+                        <Column field="streak" header="Streak" ></Column>
                     </DataTable>
                 </div>
                 <div className="p-5"> {peutFumerCeTour ? <Message severity="success" text="Ce man peut fumer"/> :
