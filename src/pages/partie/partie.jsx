@@ -9,8 +9,11 @@ import {Message} from "primereact/message";
 import {InputNumber} from "primereact/inputnumber";
 import {ToggleButton} from "primereact/togglebutton";
 import {calculerScore} from "@/fonctions/scores";
+import React, { useRef } from 'react';
+import { Toast } from 'primereact/toast';
 
 const Partie = () => {
+    const toast = useRef(null);
     const [visible, setVisible] = useState(true)
     const [visibleFin, setVisibleFin] = useState(false)
     const [joueurs, setJoueurs] = useState([{
@@ -33,13 +36,16 @@ const Partie = () => {
         setJoueurs(JSON.parse(router.query.joueurs))
     }, [router.query]);
 
+    const showPuffToSmoke = (score, prevScore) => {
+        toast.current.show({ severity: 'info', summary: 'Le man peut fumer '+score, life: 4000 });
+    }
 
     const nextPlayer = () => {
 
         joueurs.map((joueur, index) => {
             if (selectedJoueur.value === joueur.value) {
+                let prevScore = selectedJoueur.scoreTotal;
                 let calcul = calculerScore(score, firstTry, joueur.streak)
-
                 console.table(
                 "calcul: ", calcul,
                 "score: ", score,
@@ -51,8 +57,8 @@ const Partie = () => {
                     joueur.streak++;
                     joueur.scoreTotal += calcul;
                 }
-                
-                console.log("score total: ", joueur.scoreTotal)
+
+                showPuffToSmoke(joueur.scoreTotal, prevScore)
                 
                 joueur.cartons = selectedJoueur.cartons
                 joueur.peutFumer = true
@@ -105,6 +111,7 @@ const Partie = () => {
 
     return (
         <>
+            <Toast ref={toast} position="center" />
             <Dialog
                 header={
                     <div>
