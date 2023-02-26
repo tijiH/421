@@ -96,6 +96,17 @@
   border-radius: 6px !important;
 }
 
+.p-toast-message {
+  width: 350px !important;
+  height: 50px;
+  margin-left: 10px !important;
+  text-align: center;
+}
+.p-toast-message-content {
+  align-items: center !important;
+  padding-top: 10px !important;
+}
+
 /* FOOTER */
 
 .footer {

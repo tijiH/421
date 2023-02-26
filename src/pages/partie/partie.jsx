@@ -11,6 +11,7 @@ import {ToggleButton} from "primereact/togglebutton";
 import {calculerScore} from "@/fonctions/scores";
 import React, { useRef } from 'react';
 import { Toast } from 'primereact/toast';
+import { showPuffToSmoke } from '@/fonctions/puff';
 
 const Partie = () => {
     const toast = useRef(null);
@@ -36,8 +37,10 @@ const Partie = () => {
         setJoueurs(JSON.parse(router.query.joueurs))
     }, [router.query]);
 
-    const showPuffToSmoke = (score, prevScore) => {
-        toast.current.show({ severity: 'info', summary: 'Le man peut fumer '+score, life: 4000 });
+    const onKeyEventListener = (e) => {
+        if (e.key === "Enter") {
+            nextPlayer()
+        }
     }
 
     const nextPlayer = () => {
@@ -58,7 +61,7 @@ const Partie = () => {
                     joueur.scoreTotal += calcul;
                 }
 
-                showPuffToSmoke(joueur.scoreTotal, prevScore)
+                showPuffToSmoke(joueur.scoreTotal, prevScore, score, peutFumerCeTour, toast)
                 
                 joueur.cartons = selectedJoueur.cartons
                 joueur.peutFumer = true
@@ -105,7 +108,7 @@ const Partie = () => {
 
     }
 
-    const toggleDialog = () => {
+    const toggleEndDialog = () => {
         setVisibleFin(true)
     }
 
@@ -194,13 +197,13 @@ const Partie = () => {
                     </div>
                     <div className='flex flex-column gap-2'>
                             <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}
-                                placeholder="Score" size={12} maxLength={3}      />
+                                placeholder="Score" size={12} maxLength={3} onKeyPress={onKeyEventListener} />
                             <ToggleButton onLabel="First Try" offLabel="First try" onIcon="pi pi-check" offIcon="pi pi-times"
                                         checked={firstTry} onChange={(e) => setFirstTry(e.value)} />
                     </div>
                     <div className="flex flex-column gap-2 mr-2">
-                        <button className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
-                        <button className="p-button h-fit" onClick={toggleDialog}>Termine</button>
+                        <button type='submit' className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
+                        <button className="p-button h-fit" onClick={toggleEndDialog}>Termine</button>
                     </div>
                 </div>
             </div>
