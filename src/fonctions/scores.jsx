@@ -3,7 +3,7 @@ const scores = {
     111: 7,
     222: 5,
     333: 3,
-    444: 0,
+    // 444: 0,
     555: 5,
     666: 6,
 
@@ -88,6 +88,6 @@ export const calculerScore = (lance, firstStrike, streak) => {
     let scoreToReturn = scores[lance];
     if (!scoreToReturn) return 0;
     if(firstStrike) scoreToReturn += 1;
-    if(streak > 2) scoreToReturn += streak - 2;
+    if(streak > 2 && scoreToReturn != 1.5) scoreToReturn += streak - 2;
     return scoreToReturn;
 }

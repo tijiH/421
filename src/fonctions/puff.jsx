@@ -11,8 +11,6 @@ const steps = [20, 40, 60, 80, 100,
 
 
 export const showPuffToSmoke = (score, prevScore, diceScore, peutFumerCeTour, toast) => {
-    let msg = 'Ce man peut fumer'
-
     if (peutFumerCeTour === false) {
         toast.current.show({ severity: 'error', summary: 'Ce man ne peut pas fumer', life: 4000 })
         return
@@ -26,12 +24,12 @@ export const showPuffToSmoke = (score, prevScore, diceScore, peutFumerCeTour, to
     steps.forEach((step) => {
         if (Number(prevScore) < step && Number(score) >= step) {
             if ((step % 100) === 0) {
-                msg = 'Ce man fume 3 puffs'
+                toast.current.show({ severity: 'warn', summary: 'ce man fume 3 puff', life: 3000 })
+                return
             } else {
-                msg = 'Ce man fume 2 puffs'
+                toast.current.show({ severity: 'warn', summary: 'ce man fume 2 puff', life: 3000 })
+                return
             }
-            return
         }
     })
-    toast.current.show({ severity: 'success', summary: msg, life: 3000 })
 }
