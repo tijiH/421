@@ -12,11 +12,13 @@ import {calculerScore} from "@/fonctions/scores";
 import React, { useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { showPuffToSmoke } from '@/fonctions/puff';
+import { Checkbox } from 'primereact/checkbox';
 
 const Partie = () => {
     const toast = useRef(null);
     const [visible, setVisible] = useState(true)
     const [visibleFin, setVisibleFin] = useState(false)
+    const [checkScore, setCheckScore] = useState(false)
     const [joueurs, setJoueurs] = useState([{
         value: "",
         scoreTotal: 0,
@@ -47,20 +49,19 @@ const Partie = () => {
 
         joueurs.map((joueur, index) => {
             if (selectedJoueur.value === joueur.value) {
-                let prevScore = selectedJoueur.scoreTotal;
                 let calcul = calculerScore(score, firstTry, joueur.streak)
-                console.table(
-                "calcul: ", calcul,
+                console.log(
                 "score: ", score,
-                "first try: ", firstTry,
+                "calcul: ", calcul,
                 "streak: ", joueur.streak)
-                if (calcul < 0 || calcul === undefined) {
+                if (calcul <= 0 || calcul === undefined) {
                     joueur.streak = 0;
                 } else {
                     joueur.streak++;
                     joueur.scoreTotal += calcul;
                 }
-
+                
+                let prevScore = selectedJoueur.scoreTotal;
                 showPuffToSmoke(joueur.scoreTotal, prevScore, score, peutFumerCeTour, toast)
                 
                 joueur.cartons = selectedJoueur.cartons
@@ -115,7 +116,7 @@ const Partie = () => {
     return (
         <>
             <Toast ref={toast} position="center" />
-            <Dialog
+            <Dialog id='whoStartDialog'
                 header={
                     <div>
                         <p className='text-center text-color-black text-sm'>Selectionnez le Joueur qui commence</p>
@@ -140,7 +141,7 @@ const Partie = () => {
                 visible={visible}
                 closable={false}
             />
-            <Dialog 
+            <Dialog id='confirmDialog'
                 header={
                 <>
                     <h3 className='text-center'>Confirmer</h3>
@@ -178,11 +179,14 @@ const Partie = () => {
                         <p>Ce man est clean</p>
                     }
                 </div>
-                <div id="divDataTable" className="mt-2">
-                    <DataTable value={joueurs}>
+                <div id="divDataTable" className="mt-2 ml-4 flex gap-2">
+                    <DataTable value={joueurs} reorderableColumns reorderableRows onRowReorder={(e) => setJoueurs(e.value)}>
+                        <Column rowReorder style={{ width: '1rem' }} />
                         <Column field="value" header="Joueur"></Column>
                         <Column field="streak" header="Streak" ></Column>
+                        {checkScore && <Column field="scoreTotal" header="Score"></Column>}
                     </DataTable>
+                    <Checkbox onChange={(e) => setCheckScore(e.checked)} checked={checkScore}></Checkbox>
                 </div>
                 <div className="p-5"> {peutFumerCeTour ? <Message severity="success" text="Ce man peut fumer"/> :
                     <Message severity="error" text="Ce man ne peut pas fumer"/>} </div>

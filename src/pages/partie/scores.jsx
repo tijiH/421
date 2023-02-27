@@ -31,6 +31,8 @@ const Scores = () => {
         })
     }
 
+    console.table(joueurs)
+
     return (
         <div className="m-4">
             <div className="flex flex-column align-items-center text-color-black mb-2">
@@ -41,7 +43,7 @@ const Scores = () => {
                 <Column field="value" header="Joueur" />
                 <Column field="scoreTotal" header="Score" />
                 <Column field="streak" header="Streak" />
-                <Column field="cartons" header="Cartons" />
+                {/* <Column field="cartons" header="Cartons" /> */}
             </DataTable>
         </div>
     )

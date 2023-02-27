@@ -86,6 +86,7 @@ const scores = {
  * **/
 export const calculerScore = (lance, firstStrike, streak) => {
     let scoreToReturn = scores[lance];
+    if (!scoreToReturn) return 0;
     if(firstStrike) scoreToReturn += 1;
     if(streak > 2) scoreToReturn += streak - 2;
     return scoreToReturn;
