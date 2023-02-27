@@ -14,7 +14,7 @@ import { showPuffToSmoke } from '@/fonctions/puff';
 import { Checkbox } from 'primereact/checkbox';
 import { Tag } from 'primereact/tag';
 
-const Partie = () => {
+const PartieOverview = () => {
     const toast = useRef(null);
     const [visible, setVisible] = useState(true)
     const [visibleFin, setVisibleFin] = useState(false)
@@ -24,6 +24,7 @@ const Partie = () => {
         scoreTotal: 0,
         cartons: [""],
         streak: 0,
+        meilleureStreak: 0,
         peutFumer: true
     }])
     const [selectedJoueur, setSelectedJoueur] = useState(joueurs[0])
@@ -61,16 +62,19 @@ const Partie = () => {
                 } else {
                     joueur.streak++;
                     joueur.scoreTotal += calcul;
+                    if(joueur.streak - 2 > joueur.meilleureStreak) joueur.meilleureStreak = joueur.streak - 2;
                 }
 
                 showPuffToSmoke(joueur.scoreTotal, prevScore, score, peutFumerCeTour, toast)
 
+                // Reinitialisation des variables
                 joueur.cartons = selectedJoueur.cartons
                 joueur.peutFumer = true
                 setScore(null)
                 setPeutFumerCeTour(true)
                 setFirstTry(false)
 
+                // Affichage du joueur suivant
                 if (index === joueurs.length - 1) {
                     setSelectedJoueur(joueurs[0])
                     setPeutFumerCeTour(joueurs[0].peutFumer)
@@ -111,8 +115,8 @@ const Partie = () => {
                 <Tag severity={rowData.peutFumer ? "success" : "danger"} onClick={() => setPlayerCannotSmoke(rowData.value)}>
                     {rowData.peutFumer?
                     <i className='pi pi-times cursor-pointer'/>
-                    :    
-                    <i className='pi pi-check cursor-pointer'/>                
+                    :
+                    <i className='pi pi-check cursor-pointer'/>
                     }
                 </Tag>;
             </div>
@@ -140,7 +144,7 @@ const Partie = () => {
                 false :
                 (couleur === "Jaune" && selectedJoueur.cartons.filter(carton => carton === "J").length % 2 === 0)
         )
-    
+
         if (peutFumerCeTour === true) {
             setSelectedJoueur(joueur => {
                 return {
@@ -205,7 +209,9 @@ const Partie = () => {
                             <button className="p-button p-button-success mt-2"
                                 onClick={() => router.push({
                                     pathname: '/partie/scores',
-                                    query: { joueurs: JSON.stringify(joueurs) }
+                                    query: {
+                                        joueurs: JSON.stringify(joueurs)
+                                    }
                                 })}>Oui
                             </button>
                         </div>
@@ -270,4 +276,4 @@ const Partie = () => {
     )
 }
 
-export default Partie
+export default PartieOverview

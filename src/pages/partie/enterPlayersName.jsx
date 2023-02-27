@@ -4,13 +4,13 @@ import { InputText } from 'primereact/inputtext';
 import Router from 'next/router';
 
 const EnterPlayersName = () => {
-    const inputArr = [{ value: "", scoreTotal: 0, cartons: [""], streak: 0, peutFumer: true }];
+    const inputArr = [{ value: "", scoreTotal: 0, cartons: [""], streak: 0, meilleureStreak: 0, peutFumer: true }];
     const [joueurs, setJoueurs] = useState(inputArr);
 
     const addInput = () => {
         if (joueurs.length > 9) return;
         setJoueurs(s => {
-            return [...s, { value: "", scoreTotal: 0, cartons: [""], streak: 0, peutFumer: true }];
+            return [...s, { value: "", scoreTotal: 0, cartons: [""], streak: 0, meilleureStreak: 0, peutFumer: true }];
         });
     };
 
@@ -33,7 +33,7 @@ const EnterPlayersName = () => {
     const submitPlayers = (e) => {
         e.preventDefault();
         Router.push({
-            pathname: '/partie/partie',
+            pathname: '/partie/partieOverview',
             query: { joueurs: JSON.stringify(joueurs) }
         })
     }

@@ -4,6 +4,7 @@ import { Column } from "primereact/column";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Tag } from 'primereact/tag';
+import {Card} from "primereact/card";
 
 const Scores = () => {
     const router = useRouter()
@@ -12,6 +13,7 @@ const Scores = () => {
         scoreTotal: 0,
         cartons: [""],
         streak: 0,
+        meilleureStreak: 0,
         peutFumer: true
     }]);
     const [winner, setWinner] = useState("");
@@ -43,18 +45,21 @@ const Scores = () => {
     }
 
     return (
-        <div className="m-4">
-            <div className="flex flex-column align-items-center text-color-black mb-2">
-                <Image priority src="/couronne.png" alt='logo' width={80} height={80}/>
-                <h1 className="mt-0">{winner}</h1>
+        <>
+            <div className="m-4">
+                <div className="flex flex-column align-items-center text-color-black mb-2">
+                    <Image priority src="/couronne.png" alt='logo' width={80} height={80}/>
+                    <h1 className="mt-0">{winner}</h1>
+                </div>
+                <DataTable value={joueurs}>
+                    <Column field="value" header="Joueur" />
+                    <Column field="scoreTotal" header="Score" />
+                    <Column header="Streak" body={streakBodyTemplate} />
+                    <Column field="meilleureStreak" header="Meilleure Streak" />
+                    {/* <Column field="cartons" header="Cartons" /> */}
+                </DataTable>
             </div>
-            <DataTable value={joueurs}>
-                <Column field="value" header="Joueur" />
-                <Column field="scoreTotal" header="Score" />
-                <Column header="Streak" body={streakBodyTemplate} />
-                {/* <Column field="cartons" header="Cartons" /> */}
-            </DataTable>
-        </div>
+        </>
     )
 }
 
