@@ -33,8 +33,10 @@ const PartieOverview = () => {
     const [peutFumerCeTour, setPeutFumerCeTour] = useState(true)
     const [score, setScore] = useState(null)
     const [firstTry, setFirstTry] = useState(false)
-    const [prevDiceRollScore, setPrevDiceRollScore] = useState(0)
-
+    const [prevDiceThrow, setPrevDiceThrow] = useState({
+        value: "",
+        score: -1
+    })    
     const router = useRouter()
 
 
@@ -67,12 +69,13 @@ const PartieOverview = () => {
                     if (joueur.streak - 2 > joueur.meilleureStreak) joueur.meilleureStreak = joueur.streak - 2;
                 }
 
+                setPrevDiceThrow({value: joueur.value, score: calcul})
                 showPuffToSmoke(joueur.scoreTotal, prevScore, score, peutFumerCeTour, toast)
-                if (score === 333)
-                setDialVisibleTriple(true)
+                if (score === 333) {
+                    setDialVisibleTriple(true)
+                }
 
                 // Reinitialisation des variables
-                setPrevDiceRollScore(calcul)
                 joueur.cartons = selectedJoueur.cartons
                 joueur.peutFumer = true
                 setScore(null)
@@ -131,6 +134,17 @@ const PartieOverview = () => {
                     peutFumer: false
                 }
             })
+        }
+    }
+
+    const undoLastThrow = () => {
+        if (prevDiceThrow.score != -1) {
+            let tempJoueur = joueurs.find(joueur => joueur.value === prevDiceThrow.value)
+            tempJoueur.scoreTotal -= prevDiceThrow.score
+            tempJoueur.streak -= 1
+            setSelectedJoueur(tempJoueur)
+            setPrevDiceThrow({value: "", score: -1})
+            toast.current.show({ severity: "info", summary: prevDiceThrow.value + " doit rejouer", life: 3000})
         }
     }
 
@@ -219,7 +233,7 @@ const PartieOverview = () => {
             />
             <div className="flex flex-column align-items-center mt-2">
                 <div id="divEntete" className='flex align-items-center justify-content-center w-full gap-2'>
-                    <div className='p-button'>
+                    <div className='p-button' onClick={() => undoLastThrow()}>
                         <i className='pi pi-undo'></i>
                     </div>
                     <div id="divNomJoueurs" className="p-card p-card-player" hidden={dialVisible}>
