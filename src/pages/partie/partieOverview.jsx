@@ -72,7 +72,7 @@ const PartieOverview = () => {
                 } else {
                     joueur.streak++;
                     joueur.scoreTotal += calcul;
-                    console.log("STREAK INCREMENT", "\n_____________________________________")
+                    console.log("FIRST TRY : ",firstTry, "\nSTREAK INCREMENT", "\n_____________________________________")
                     if (joueur.streak - 2 > joueur.meilleureStreak) joueur.meilleureStreak = joueur.streak - 2;
                 }
 
