@@ -46,26 +46,33 @@ const PartieOverview = () => {
 
     const onKeyEventListener = (e) => {
         if (e.key === "Enter") {
+            console.log("Enter pressed")
             nextPlayer()
         }
     }
 
     const nextPlayer = () => {
-
+        console.log(
+            "%cNextPlayer(): selected joueur",
+            "color:red;font-family:system-ui;font-size:1.5rem;font-weight:bold"
+        );
         joueurs.map((joueur, index) => {
             if (selectedJoueur.value === joueur.value) {
                 let prevScore = selectedJoueur.scoreTotal;
                 let calcul = calculerScore(score, firstTry, joueur.streak)
                 console.log(
-                    "Joueur: ", joueur.value,
-                    "score: ", score,
-                    "calcul: ", calcul,
-                    "streak: ", joueur.streak)
+                    "joueur: ", joueur.value, "\n",
+                    "score: ", score,"\n",
+                    "calcul: ", calcul,"\n",
+                    "streak: ", joueur.streak,
+                    "\n_____________________________________")
                 if (calcul <= 0 || calcul === undefined) {
                     joueur.streak = 0;
+                    console.log("STREAK RESET", "\n_____________________________________")
                 } else {
                     joueur.streak++;
                     joueur.scoreTotal += calcul;
+                    console.log("STREAK INCREMENT", "\n_____________________________________")
                     if (joueur.streak - 2 > joueur.meilleureStreak) joueur.meilleureStreak = joueur.streak - 2;
                 }
 
@@ -84,18 +91,22 @@ const PartieOverview = () => {
 
                 // Affichage du joueur suivant
                 if (index === joueurs.length - 1) {
+                    console.table(joueurs)
+                    console.log("TOUR SUIVANT", "\n_____________________________________")
                     setSelectedJoueur(joueurs[0])
                     setPeutFumerCeTour(joueurs[0].peutFumer)
                 } else {
                     setSelectedJoueur(joueurs[index + 1])
                     setPeutFumerCeTour(joueurs[index + 1].peutFumer)
                 }
+
             }
         })
     }
 
     const setPlayerCannotSmoke = (name) => {
         let newArr = new Array;
+        console.log(name, " ne fume pas", "\n_____________________________________")
 
         joueurs.forEach(joueur => {
             if (joueur.value === name) {
@@ -110,6 +121,7 @@ const PartieOverview = () => {
     }
 
     const addCarton = (couleur) => {
+        console.log(couleur, " pour ", selectedJoueur.value, "\n_____________________________________")
         let caTireOuPas = (
             couleur === "Rouge" ?
                 false :
@@ -138,6 +150,7 @@ const PartieOverview = () => {
     }
 
     const undoLastThrow = () => {
+        console.log("Retour dernier lancé", "\n_____________________________________")
         if (prevDiceThrow.score != -1) {
             let tempJoueur = joueurs.find(joueur => joueur.value === prevDiceThrow.value)
             tempJoueur.scoreTotal -= prevDiceThrow.score
@@ -277,7 +290,7 @@ const PartieOverview = () => {
                     </div>
                     <div className='flex flex-column gap-2'>
                         <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}
-                            placeholder="Score (ex: 421)" size={12} maxLength={3} onKeyPress={onKeyEventListener} />
+                            placeholder="Score (ex: 421)" min={100} size={12} maxLength={3} onKeyPress={onKeyEventListener} />
                         <ToggleButton onLabel="First Try" offLabel="First try" onIcon="pi pi-check" offIcon="pi pi-times"
                             checked={firstTry} onChange={(e) => setFirstTry(e.value)} />
                     </div>
