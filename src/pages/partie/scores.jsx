@@ -4,7 +4,6 @@ import { Column } from "primereact/column";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Tag } from 'primereact/tag';
-import {Card} from "primereact/card";
 
 const Scores = () => {
     const router = useRouter()
@@ -54,7 +53,7 @@ const Scores = () => {
                 <DataTable value={joueurs}>
                     <Column field="value" header="Joueur" />
                     <Column field="scoreTotal" header="Score" />
-                    <Column header="Streak" body={streakBodyTemplate} />
+                    {/* <Column header="Streak" body={streakBodyTemplate} /> */}
                     <Column field="meilleureStreak" header="Meilleure Streak" />
                     {/* <Column field="cartons" header="Cartons" /> */}
                 </DataTable>

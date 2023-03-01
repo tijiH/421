@@ -12,12 +12,13 @@ import React, { useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { showPuffToSmoke } from '@/fonctions/puff';
 import { Checkbox } from 'primereact/checkbox';
-import { Tag } from 'primereact/tag';
+import { playerBodyTemplate, peutFumerBodyTemplate } from '@/fonctions/dataTableTemplates';
 
 const PartieOverview = () => {
     const toast = useRef(null);
-    const [visible, setVisible] = useState(true)
-    const [visibleFin, setVisibleFin] = useState(false)
+    const [dialVisible, setDialVisible] = useState(true)
+    const [dialVisibleFin, setDialVisibleFin] = useState(false)
+    const [dialVisibleTriple, setDialVisibleTriple] = useState(false)
     const [checkScore, setCheckScore] = useState(false)
     const [joueurs, setJoueurs] = useState([{
         value: "",
@@ -28,10 +29,11 @@ const PartieOverview = () => {
         peutFumer: true
     }])
     const [selectedJoueur, setSelectedJoueur] = useState(joueurs[0])
-
+    const [selectedJoueurTriple, setSelectedJoueurTriple] = useState(joueurs[0])
     const [peutFumerCeTour, setPeutFumerCeTour] = useState(true)
     const [score, setScore] = useState(null)
     const [firstTry, setFirstTry] = useState(false)
+    const [prevDiceRollScore, setPrevDiceRollScore] = useState(0)
 
     const router = useRouter()
 
@@ -62,12 +64,15 @@ const PartieOverview = () => {
                 } else {
                     joueur.streak++;
                     joueur.scoreTotal += calcul;
-                    if(joueur.streak - 2 > joueur.meilleureStreak) joueur.meilleureStreak = joueur.streak - 2;
+                    if (joueur.streak - 2 > joueur.meilleureStreak) joueur.meilleureStreak = joueur.streak - 2;
                 }
 
                 showPuffToSmoke(joueur.scoreTotal, prevScore, score, peutFumerCeTour, toast)
+                if (score === 333)
+                setDialVisibleTriple(true)
 
                 // Reinitialisation des variables
+                setPrevDiceRollScore(calcul)
                 joueur.cartons = selectedJoueur.cartons
                 joueur.peutFumer = true
                 setScore(null)
@@ -84,43 +89,6 @@ const PartieOverview = () => {
                 }
             }
         })
-    }
-
-    const streakBodyTemplate = (rowData) => {
-        return (
-            <div className='text-center'>
-                <Tag severity={"danger"} className='ml-2 cursor-pointer' onClick={() => {
-                            let name = ""
-                            let newArr = new Array;
-                            joueurs.forEach(joueur => {
-                                if (joueur.value === rowData.value) {
-                                    joueur.streak = 0;
-                                    name = joueur.value
-                                }
-                                newArr.push(joueur);
-                            })
-                            setJoueurs(newArr)
-                            toast.current.show({ severity: 'info', summary: "Streak de " + name + ' casse', life: 3000 })
-                        }
-                    }>
-                    {rowData.streak >= 3 ? rowData.streak - 2 : 0}
-                </Tag>
-            </div>
-        )
-    }
-
-    const peutFumerBodyTemplate = (rowData) => {
-        return (
-            <div className='text-center'>
-                <Tag severity={rowData.peutFumer ? "success" : "danger"} onClick={() => setPlayerCannotSmoke(rowData.value)}>
-                    {rowData.peutFumer?
-                    <i className='pi pi-times cursor-pointer'/>
-                    :
-                    <i className='pi pi-check cursor-pointer'/>
-                    }
-                </Tag>;
-            </div>
-        )
     }
 
     const setPlayerCannotSmoke = (name) => {
@@ -166,10 +134,6 @@ const PartieOverview = () => {
         }
     }
 
-    const toggleEndDialog = () => {
-        setVisibleFin(true)
-    }
-
     return (
         <>
             <Toast ref={toast} position="center" />
@@ -182,20 +146,19 @@ const PartieOverview = () => {
                                 className="text-xs mt-3"
                                 options={joueurs} value={selectedJoueur.value} onChange={(e) => {
                                     setSelectedJoueur(joueurs.find(joueur => joueur.value === e.value))
-
                                 }}
                                 optionLabel="value" placeholder="Joueurs"
                             />
                             <button className="p-button p-button-success mt-4"
                                 onClick={(e) => {
                                     if (!selectedJoueur.value) return;
-                                    setVisible(false)
+                                    setDialVisible(false)
                                 }}>Valider
                             </button>
                         </div>
                     </div>
                 }
-                visible={visible}
+                visible={dialVisible}
                 closable={false}
             />
             <Dialog id='confirmDialog'
@@ -204,7 +167,7 @@ const PartieOverview = () => {
                         <h3 className='text-center'>Confirmer</h3>
                         <div className="flex gap-2">
                             <button className="p-button p-button-danger mt-2"
-                                onClick={() => setVisibleFin(false)}>Non
+                                onClick={() => setDialVisibleFin(false)}>Non
                             </button>
                             <button className="p-button p-button-success mt-2"
                                 onClick={() => router.push({
@@ -218,21 +181,60 @@ const PartieOverview = () => {
                     </>
                 }
                 closable={false}
-                visible={visibleFin}
+                visible={dialVisibleFin}
+            />
+            <Dialog id='tripleDialog'
+                header={
+                    <div>
+                        <p className='text-center text-color-black text-base'>Qui veux-tu baiser</p>
+                        <div className="flex flex-column align-items-center">
+                            <Dropdown
+                                className="text-xs mt-3"
+                                options={joueurs} value={selectedJoueurTriple.value} onChange={(e) => {
+                                    setSelectedJoueurTriple(joueurs.find(joueur => joueur.value === e.value))
+                                }}
+                                optionLabel="value" placeholder="Joueurs"
+                            />
+                            <button className="p-button p-button-success mt-4"
+                                onClick={() => {
+                                    if (!selectedJoueurTriple.value) return;
+                                    joueurs.map((joueur) => {
+                                        if (joueur.value === selectedJoueurTriple.value) {
+                                            if (joueur.streak >= 3) {
+                                                joueur.streak = 0;
+                                            } else {
+                                                setPlayerCannotSmoke(selectedJoueurTriple.value)
+                                            }
+                                        }
+                                    })
+                                    setSelectedJoueurTriple({ value: "", scoreTotal: 0, cartons: [""], streak: 0, meilleureStreak: 0, peutFumer: true })
+                                    setDialVisibleTriple(false)
+                                }}>Valider
+                            </button>
+                        </div>
+                    </div>
+                }
+                closable={false}
+                visible={dialVisibleTriple}
             />
             <div className="flex flex-column align-items-center mt-2">
-                <div id="divNomJoueurs" className="p-card p-card-player" hidden={visible}>
-                    <h3>{selectedJoueur.value}</h3>
+                <div id="divEntete" className='flex align-items-center justify-content-center w-full gap-2'>
+                    <div className='p-button'>
+                        <i className='pi pi-undo'></i>
+                    </div>
+                    <div id="divNomJoueurs" className="p-card p-card-player" hidden={dialVisible}>
+                        <h3>{selectedJoueur.value}</h3>
+                    </div>
                 </div>
                 <div id="divCartons">
                     {selectedJoueur.cartons.length > 1 ?
                         selectedJoueur.cartons.map((carton) => {
                             if (carton === "J") return (
                                 <Image className="mt-2" priority src="/carton_jaune.png" alt='logo' width={40}
-                                    height={40} hidden={visible} />)
+                                    height={40} hidden={dialVisible} />)
                             if (carton === "R") return (
                                 <Image className="mt-2" priority src="/carton_rouge.png" alt='logo' width={40}
-                                    height={40} hidden={visible} />)
+                                    height={40} hidden={dialVisible} />)
                         })
                         :
                         <p>Ce man est clean</p>
@@ -241,16 +243,12 @@ const PartieOverview = () => {
                 <div id="divDataTable" className="mt-2 flex gap-2">
                     <DataTable value={joueurs} reorderableColumns reorderableRows onRowReorder={(e) => setJoueurs(e.value)}>
                         <Column rowReorder style={{ width: '1rem' }} />
-                        <Column field="value" header="Joueur"></Column>
-                        <Column header="Streak" body={streakBodyTemplate} ></Column>
-                        <Column header="Fume" body={peutFumerBodyTemplate}></Column>
-                        {checkScore && <Column field="scoreTotal" header="Score"></Column>}
+                        <Column header="Joueur" body={playerBodyTemplate}></Column>
+                        <Column header="Fume" body={(rowData) => peutFumerBodyTemplate(rowData, setPlayerCannotSmoke)}></Column>
+                        {checkScore && <Column field="scoreTotal" header="Score" bodyClassName="text-center"></Column>}
                     </DataTable>
                 </div>
                 <Checkbox className='mt-2' onChange={(e) => setCheckScore(e.checked)} checked={checkScore}></Checkbox>
-                {/* <div className="p-5"> {peutFumerCeTour ? <Message severity="success" text="Ce man peut fumer" /> :
-                    <Message severity="error" text="Ce man ne peut pas fumer" />}
-                </div> */}
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
                     <div className="ml-2 mb-5 flex flex-column gap-2">
                         <button className="p-button" onClick={() => addCarton("Jaune")}>
@@ -268,7 +266,7 @@ const PartieOverview = () => {
                     </div>
                     <div className="flex flex-column gap-2 mr-2">
                         <button type='submit' className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
-                        <button className="p-button h-fit" onClick={toggleEndDialog}>Termine</button>
+                        <button className="p-button h-fit" onClick={() => {setDialVisibleFin(true)}}>Termine</button>
                     </div>
                 </div>
             </div>

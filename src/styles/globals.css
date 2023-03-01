@@ -95,6 +95,10 @@
 .p-datatable-wrapper {
   border-radius: 6px !important;
 }
+.p-datatable .p-datatable-tbody > tr > td {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
 
 .p-toast-message {
   width: 350px !important;
@@ -104,7 +108,8 @@
 }
 .p-toast-message-content {
   align-items: center !important;
-  padding-top: 10px !important;
+  padding-top: 2px !important;
+  justify-content: space-between;
 }
 
 /* FOOTER */
