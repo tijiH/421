@@ -274,7 +274,7 @@ const PartieOverview = () => {
                     </div>
                     <div className='flex flex-column gap-2'>
                         <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}
-                            placeholder="Score" size={12} maxLength={3} onKeyPress={onKeyEventListener} aria-placeholder={"Ex: 421"}/>
+                            placeholder="Score (ex: 421)" size={12} maxLength={3} onKeyPress={onKeyEventListener} />
                         <ToggleButton onLabel="First Try" offLabel="First try" onIcon="pi pi-check" offIcon="pi pi-times"
                             checked={firstTry} onChange={(e) => setFirstTry(e.value)} />
                     </div>
