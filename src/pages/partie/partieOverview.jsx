@@ -262,7 +262,10 @@ const PartieOverview = () => {
                         {checkScore && <Column field="scoreTotal" header="Score" bodyClassName="text-center"></Column>}
                     </DataTable>
                 </div>
-                <Checkbox className='mt-2' onChange={(e) => setCheckScore(e.checked)} checked={checkScore}></Checkbox>
+                <div className="flex align-items-center">
+                    <Checkbox className='m-2' onChange={(e) => setCheckScore(e.checked)} checked={checkScore} />
+                    <label htmlFor="voirScore" className="m-2">Voir scores</label>
+                </div>
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
                     <div className="ml-2 mb-5 flex flex-column gap-2">
                         <button className="p-button" onClick={() => addCarton("Jaune")}>
