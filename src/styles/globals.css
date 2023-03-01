@@ -1,0 +1,131 @@
+:root {
+  width: 100%;
+  height: 100%;
+  /* width: 375px;
+  height: 812px; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--light-purple);
+
+  font-family: 'm20', sans-serif;
+
+  --primary-black: rgba(34, 39, 46);
+  --blue: rgba(83, 155, 245);
+  --light-purple: rgba(171, 150, 227);
+};
+
+
+.body {
+  margin: 0px;
+}
+@font-face {
+  font-family: 'm20';
+  src: local('m20'), url(../fonts/m20.TTF) format('truetype');
+}
+
+.p-component {
+  font-family: 'm20', sans-serif !important;
+}
+
+.text-color-black {
+  color: var(--primary-black);
+}
+
+
+
+/* HEADER */
+.header {
+  display: flex;
+  box-shadow: 0px 2px 5px 0px #606060;
+  background-color: var(--primary-black);
+  align-items: center;
+  padding-left: 1.2rem;
+  color: var(--light-purple);
+}
+.header-title {
+  font-size: xx-large;
+  font-weight: bold;
+}
+.header-by {
+  font-size: 10%;
+}
+
+/* BODY */
+
+.container {
+  display: grid;
+}
+
+.container-bottom {
+  position: absolute;
+  bottom: 0;
+  height: 125px;
+  /* grid-template-columns: 100px 100px 100px; */
+  /* grid-template-rows: auto; */
+}
+
+.p-card-player {
+  text-align: center;
+  width: 70% !important;
+}
+
+.p-button {
+  font-family: 'm20', sans-serif;
+  background: var(--primary-black) !important;
+  color: var(--light-purple) !important;
+}
+.p-button.p-button-icon-only {
+  width: 2.5rem !important;
+  height: 2.5rem!important;
+}
+.p-button:focus {
+  border-color:  0!important;
+}
+
+.p-inputtext {
+  padding: 10px !important;
+  font-family: 'm20', sans-serif !important;
+}
+.p-inputtext::placeholder {
+  color: #00000030 !important;
+}
+
+.p-datatable-wrapper {
+  border-radius: 6px !important;
+}
+.p-datatable .p-datatable-tbody > tr > td {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.p-toast-message {
+  width: 350px !important;
+  height: 50px;
+  margin-left: 10px !important;
+  text-align: center;
+}
+.p-toast-message-content {
+  align-items: center !important;
+  padding-top: 10px !important;
+  justify-content: space-between;
+}
+
+/* FOOTER */
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  margin-left: 10%;
+  font-size: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer-border {
+  border-top: 1px solid #60606070;
+  width: 80%;
+}
