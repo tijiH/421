@@ -25,7 +25,7 @@ export default function Home() {
         </div>
         <Dialog
           header={
-            <p className='text-center text-color-black text-sm'>Mettre de l'argent en jeu ?</p>
+            <p className='text-center text-color-black text-sm'>Mettre de l argent en jeu ?</p>
           }
           visible={visible}
           onHide={() => setVisible(false)}
