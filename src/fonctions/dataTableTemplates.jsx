@@ -15,7 +15,7 @@ export const streakBodyTemplate = (rowData) => {
 
     return (
         <div className='flex align-items-center justify-content-between gap-2'>
-            <Tag severity={severity} className='cursor-pointer text-sm'>
+            <Tag severity={severity} className='text-sm'>
                 {rowData.streak >= 3 ? rowData.streak - 2 : 0}
             </Tag>
         </div>
@@ -31,7 +31,7 @@ export const peutFumerBodyTemplate = (rowData, setPlayerCannotSmoke) => {
                     :
                     <i className='pi pi-check cursor-pointer' />
                 }
-            </Tag>;
+            </Tag>
         </div>
     )
 }

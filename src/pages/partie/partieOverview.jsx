@@ -78,6 +78,8 @@ const PartieOverview = () => {
 
                 setPrevDiceThrow({value: joueur.value, score: calcul})
                 showPuffToSmoke(joueur.scoreTotal, prevScore, score, peutFumerCeTour, toast)
+
+                // popup choix du joueur a pénaliser
                 if (score === 333) {
                     setDialVisibleTriple(true)
                 }
@@ -281,12 +283,12 @@ const PartieOverview = () => {
                     <label htmlFor="voirScore" className="m-2">Voir scores</label>
                 </div>
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
-                    <div className="ml-2 mb-5 flex flex-column gap-2">
+                    <div className="flex flex-column gap-2 ml-2">
                         <button className="p-button" onClick={() => addCarton("Jaune")}>
-                            <Image className="" priority src="/carton_jaune.png" alt='logo' width={30} height={30} />
+                            <Image className="" priority src="/carton_jaune.png" alt='logo' width={25} height={25} />
                         </button>
                         <button className="p-button" onClick={() => addCarton("Rouge")}>
-                            <Image priority src="/carton_rouge.png" alt='logo' width={30} height={30} />
+                            <Image priority src="/carton_rouge.png" alt='logo' width={25} height={25} />
                         </button>
                     </div>
                     <div className='flex flex-column gap-2'>
@@ -295,7 +297,7 @@ const PartieOverview = () => {
                         <ToggleButton onLabel="First Try" offLabel="First try" onIcon="pi pi-check" offIcon="pi pi-times"
                             checked={firstTry} onChange={(e) => setFirstTry(e.value)} />
                     </div>
-                    <div className="flex flex-column gap-2 mr-2">
+                    <div className="flex flex-column justify-content-between gap-2 mr-2">
                         <button type='submit' className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
                         <button className="p-button h-fit" onClick={() => {setDialVisibleFin(true)}}>Termine</button>
                     </div>

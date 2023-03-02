@@ -9,7 +9,7 @@
   transform: translate(-50%, -50%);
   background-color: var(--light-purple);
 
-  font-family: 'm20', sans-serif;
+  font-family: 'tommySoft', sans-serif;
 
   --primary-black: rgba(34, 39, 46);
   --blue: rgba(83, 155, 245);
@@ -21,12 +21,16 @@
   margin: 0px;
 }
 @font-face {
-  font-family: 'm20';
-  src: local('m20'), url(../fonts/m20.TTF) format('truetype');
+  /* font-family: 'm20';
+  src: local('m20'), url(../fonts/m20.TTF) format('truetype'); */
+  /* font-family: 'tommySoft';
+  src: local('tommySoft'), url(../fonts/tommySoft.otf) format('truetype'); */
+  font-family: 'tommySoft';
+  src: local('tommySoft'), url(../fonts/tommySoft.otf) format('truetype');
 }
 
 .p-component {
-  font-family: 'm20', sans-serif !important;
+  font-family: 'tommySoft', sans-serif !important;
 }
 
 .text-color-black {
@@ -42,6 +46,7 @@
   background-color: var(--primary-black);
   align-items: center;
   padding-left: 1.2rem;
+  padding-right: 1.2rem;
   color: var(--light-purple);
 }
 .header-title {
@@ -60,10 +65,7 @@
 
 .container-bottom {
   position: absolute;
-  bottom: 0;
-  height: 125px;
-  /* grid-template-columns: 100px 100px 100px; */
-  /* grid-template-rows: auto; */
+  bottom: 5%;
 }
 
 .p-card-player {
@@ -72,7 +74,7 @@
 }
 
 .p-button {
-  font-family: 'm20', sans-serif;
+  font-family: 'tommySoft', sans-serif;
   background: var(--primary-black) !important;
   color: var(--light-purple) !important;
 }
@@ -86,7 +88,7 @@
 
 .p-inputtext {
   padding: 10px !important;
-  font-family: 'm20', sans-serif !important;
+  font-family: 'tommySoft', sans-serif !important;
 }
 .p-inputtext::placeholder {
   color: #00000030 !important;
