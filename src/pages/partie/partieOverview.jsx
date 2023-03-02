@@ -1,19 +1,10 @@
-import {DataTable} from 'primereact/datatable';
-import {Column} from 'primereact/column';
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import {Dialog} from "primereact/dialog";
-import {Dropdown} from 'primereact/dropdown';
-import Image from "next/image";
-import {InputNumber} from "primereact/inputnumber";
-import {ToggleButton} from "primereact/togglebutton";
 import {calculerScore} from "@/fonctions/scores";
 import React, {useRef} from 'react';
 import {Toast} from 'primereact/toast';
 import {showPuffToSmoke} from '@/fonctions/puff';
-import {Checkbox} from 'primereact/checkbox';
 import {streakCustomHeader, streakBodyTemplate, peutFumerBodyTemplate} from '@/fonctions/dataTableTemplates';
-import CartonButtons from "@/pages/boutons/CartonsButtons";
 import ScoreTable from "@/pages/partie/scoreTable";
 import Action333 from "@/pages/partie/action333";
 import QuiCommence from "@/pages/partie/quiCommence";
@@ -114,7 +105,7 @@ const PartieOverview = () => {
     }
 
     const setPlayerCannotSmoke = (name) => {
-        let newArr = new Array;
+        let newArr = [];
         console.log(name, " ne fume pas", "\n_____________________________________")
 
         joueurs.forEach(joueur => {
