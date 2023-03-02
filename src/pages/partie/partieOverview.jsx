@@ -13,6 +13,7 @@ import { Toast } from 'primereact/toast';
 import { showPuffToSmoke } from '@/fonctions/puff';
 import { Checkbox } from 'primereact/checkbox';
 import { streakCustomHeader, streakBodyTemplate, peutFumerBodyTemplate } from '@/fonctions/dataTableTemplates';
+import CartonButtons from "@/pages/boutons/CartonsButtons";
 
 const PartieOverview = () => {
     const toast = useRef(null);
@@ -285,14 +286,8 @@ const PartieOverview = () => {
                     <label htmlFor="voirScore" className="m-2">Voir scores</label>
                 </div>
                 <div id="divButtons" className="flex container-bottom justify-content-between w-full">
-                    <div className="flex flex-column gap-2 ml-2">
-                        <button className="p-button" onClick={() => addCarton("Jaune")}>
-                            <Image className="" priority src="/carton_jaune.png" alt='logo' width={25} height={25} />
-                        </button>
-                        <button className="p-button" onClick={() => addCarton("Rouge")}>
-                            <Image priority src="/carton_rouge.png" alt='logo' width={25} height={25} />
-                        </button>
-                    </div>
+                    <CartonButtons addCarton={addCarton} />
+
                     <div className='flex flex-column gap-2'>
                         <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}
                             placeholder="Score (ex: 421)" min={100} size={12} maxLength={3} onKeyPress={onKeyEventListener} />
