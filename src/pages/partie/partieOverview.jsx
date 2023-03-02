@@ -270,8 +270,8 @@ const PartieOverview = () => {
                 <div id="divDataTable" className="mt-2 flex gap-2">
                     <DataTable value={joueurs} reorderableColumns reorderableRows onRowReorder={(e) => setJoueurs(e.value)}>
                         <Column rowReorder style={{ width: '1rem' }} />
-                        <Column header="Joueur" field='value' ></Column>
-                        <Column header="Fume" field='peutFumer'></Column>
+                        {/* <Column header="Joueur" field='value' ></Column>
+                        <Column header="Fume" field='peutFumer'></Column> */}
                         <Column header="Joueur" body={playerBodyTemplate}></Column>
                         <Column header="Fume" body={(rowData) => peutFumerBodyTemplate(rowData, setPlayerCannotSmoke)}></Column>
                         {checkScore && <Column field="scoreTotal" header="Score" bodyClassName="text-center"></Column>}
