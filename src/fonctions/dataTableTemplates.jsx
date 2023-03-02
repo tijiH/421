@@ -27,9 +27,9 @@ export const peutFumerBodyTemplate = (rowData, setPlayerCannotSmoke) => {
         <div className='ml-1 flex align-items-center'>
             <Tag severity={rowData.peutFumer ? "success" : "danger"} onClick={() => setPlayerCannotSmoke(rowData.value)}>
                 {rowData.peutFumer ?
-                    <i className='pi pi-times cursor-pointer' />
-                    :
                     <i className='pi pi-check cursor-pointer' />
+                    :
+                    <i className='pi pi-times cursor-pointer' />
                 }
             </Tag>
         </div>

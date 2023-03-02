@@ -37,6 +37,7 @@ const PartieOverview = () => {
         value: "",
         score: -1
     })
+    const [dernierTour, setDernierTour] = useState(false)
     const router = useRouter()
 
 
@@ -100,6 +101,7 @@ const PartieOverview = () => {
                 } else {
                     setSelectedJoueur(joueurs[index + 1])
                     setPeutFumerCeTour(joueurs[index + 1].peutFumer)
+                    index === joueurs.length - 2? setDernierTour(true) : setDernierTour(false)
                 }
 
             }
@@ -153,7 +155,7 @@ const PartieOverview = () => {
 
     const undoLastThrow = () => {
         console.log("Retour dernier lancé", "\n_____________________________________")
-        if (prevDiceThrow.score != -1) {
+        if (prevDiceThrow.score !== -1) {
             let tempJoueur = joueurs.find(joueur => joueur.value === prevDiceThrow.value)
             tempJoueur.scoreTotal -= prevDiceThrow.score
             tempJoueur.streak -= 1
@@ -299,7 +301,7 @@ const PartieOverview = () => {
                     </div>
                     <div className="flex flex-column justify-content-between gap-2 mr-2">
                         <button type='submit' className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
-                        <button className="p-button h-fit" onClick={() => {setDialVisibleFin(true)}}>Termine</button>
+                        <button className="p-button h-fit" onClick={() => {setDialVisibleFin(true)}} disabled={dernierTour}>Termine</button>
                     </div>
                 </div>
             </div>
