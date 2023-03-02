@@ -1,4 +1,5 @@
 import { Tag } from 'primereact/tag';
+import Image from "next/image";
 
 export const streakCustomHeader = () => {
     return (
