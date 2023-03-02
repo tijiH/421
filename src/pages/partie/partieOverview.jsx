@@ -17,6 +17,7 @@ import CartonButtons from "@/pages/boutons/CartonsButtons";
 import ScoreTable from "@/pages/partie/scoreTable";
 import Action333 from "@/pages/partie/action333";
 import QuiCommence from "@/pages/partie/quiCommence";
+import BoutonsJeu from "@/pages/partie/boutonsJeu";
 
 const PartieOverview = () => {
     const toast = useRef(null);
@@ -206,26 +207,17 @@ const PartieOverview = () => {
                 />
 
 
-                {/*BOUTONS DE JEU*/}
-                <div id="divButtons" className="flex container-bottom justify-content-between w-full">
-                    <CartonButtons addCarton={addCarton}/>
+                <BoutonsJeu
+                    addCarton={addCarton}
+                    setScore={setScore}
+                    score={score}
+                    firstTry={firstTry}
+                    setFirstTry={setFirstTry}
+                    nextPlayer={nextPlayer}
+                    setDialVisibleFin={setDialVisibleFin}
+                    dernierTour={dernierTour}
+                />
 
-                    <div className='flex flex-column gap-2'>
-                        <InputNumber id="scoreInput" value={score} onValueChange={(e) => setScore(e.value)}
-                                     placeholder="Score (ex: 421)" min={100} size={12} maxLength={3}
-                                     onKeyPress={onKeyEventListener}/>
-                        <ToggleButton onLabel="First Try" offLabel="First try" onIcon="pi pi-check"
-                                      offIcon="pi pi-times"
-                                      checked={firstTry} onChange={(e) => setFirstTry(e.value)}/>
-                    </div>
-                    <div className="flex flex-column justify-content-between gap-2 mr-2">
-                        <button type='submit' className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
-                        <button className="p-button h-fit" onClick={() => {
-                            setDialVisibleFin(true)
-                        }} disabled={dernierTour}>Termine
-                        </button>
-                    </div>
-                </div>
             </div>
         </>
     )
