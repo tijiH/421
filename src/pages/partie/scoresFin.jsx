@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { Tag } from 'primereact/tag';
 
-const Scores = () => {
+const ScoresFin = () => {
     const router = useRouter()
     const [joueurs, setJoueurs] = useState([{
         value: "",
@@ -62,4 +62,4 @@ const Scores = () => {
     )
 }
 
-export default Scores;
+export default ScoresFin;
