@@ -12,7 +12,7 @@ import React, { useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { showPuffToSmoke } from '@/fonctions/puff';
 import { Checkbox } from 'primereact/checkbox';
-import { playerBodyTemplate, peutFumerBodyTemplate } from '@/fonctions/dataTableTemplates';
+import { streakBodyTemplate, peutFumerBodyTemplate } from '@/fonctions/dataTableTemplates';
 
 const PartieOverview = () => {
     const toast = useRef(null);
@@ -161,6 +161,12 @@ const PartieOverview = () => {
         }
     }
 
+    const streakCustomHeader = () => {
+        return (
+            <Image priority src="/streak.png" alt='logo' width={25} height={25}/>
+        )
+    }
+
     return (
         <>
             <Toast ref={toast} position="center" />
@@ -270,10 +276,9 @@ const PartieOverview = () => {
                 <div id="divDataTable" className="mt-2 flex gap-2">
                     <DataTable value={joueurs} reorderableColumns reorderableRows onRowReorder={(e) => setJoueurs(e.value)}>
                         <Column rowReorder style={{ width: '1rem' }} />
-                        {/* <Column header="Joueur" field='value' ></Column> */}
-                        <Column header="Joueur" body={playerBodyTemplate}></Column>
-                        <Column header="Fume" field='peutFumer'></Column>
-                        {/* <Column header="Fume" body={(rowData) => peutFumerBodyTemplate(rowData, setPlayerCannotSmoke)}></Column> */}
+                        <Column header="Joueur" field='value' ></Column>
+                        <Column header="Fume" body={(rowData) => peutFumerBodyTemplate(rowData, setPlayerCannotSmoke)}></Column>
+                        <Column header={streakCustomHeader} body={streakBodyTemplate}></Column>
                         {checkScore && <Column field="scoreTotal" header="Score" bodyClassName="text-center"></Column>}
                     </DataTable>
                 </div>

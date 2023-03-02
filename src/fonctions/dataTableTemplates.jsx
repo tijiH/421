@@ -1,6 +1,6 @@
 import { Tag } from 'primereact/tag';
 
-export const playerBodyTemplate = (rowData) => {
+export const streakBodyTemplate = (rowData) => {
     let severity = "info";
     if (rowData.streak >= 12) severity = "danger";
     else if (rowData.streak >= 7) severity = "warning";
@@ -8,7 +8,6 @@ export const playerBodyTemplate = (rowData) => {
 
     return (
         <div className='flex align-items-center justify-content-between gap-2'>
-            <p>{rowData.value}</p>
             <Tag severity={severity} className='cursor-pointer text-sm'>
                 {rowData.streak >= 3 ? rowData.streak - 2 : 0}
             </Tag>
