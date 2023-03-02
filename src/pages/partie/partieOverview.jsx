@@ -12,7 +12,7 @@ import React, { useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { showPuffToSmoke } from '@/fonctions/puff';
 import { Checkbox } from 'primereact/checkbox';
-import { streakBodyTemplate, peutFumerBodyTemplate } from '@/fonctions/dataTableTemplates';
+import { streakCustomHeader, streakBodyTemplate, peutFumerBodyTemplate } from '@/fonctions/dataTableTemplates';
 
 const PartieOverview = () => {
     const toast = useRef(null);
@@ -159,12 +159,6 @@ const PartieOverview = () => {
             setPrevDiceThrow({value: "", score: -1})
             toast.current.show({ severity: "info", summary: prevDiceThrow.value + " doit rejouer", life: 3000})
         }
-    }
-
-    const streakCustomHeader = () => {
-        return (
-            <Image priority src="/streak.png" alt='logo' width={25} height={25}/>
-        )
     }
 
     return (

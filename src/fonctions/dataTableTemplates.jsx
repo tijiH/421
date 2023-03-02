@@ -1,5 +1,11 @@
 import { Tag } from 'primereact/tag';
 
+export const streakCustomHeader = () => {
+    return (
+        <Image priority src="/streak.png" alt='logo' width={25} height={25}/>
+    )
+}
+
 export const streakBodyTemplate = (rowData) => {
     let severity = "info";
     if (rowData.streak >= 12) severity = "danger";
