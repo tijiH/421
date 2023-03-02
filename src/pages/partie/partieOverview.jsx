@@ -272,8 +272,8 @@ const PartieOverview = () => {
                         <Column rowReorder style={{ width: '1rem' }} />
                         <Column header="Joueur" field='value' ></Column>
                         <Column header="Fume" field='peutFumer'></Column>
-                        {/* <Column header="Joueur" body={playerBodyTemplate}></Column>
-                        <Column header="Fume" body={(rowData) => peutFumerBodyTemplate(rowData, setPlayerCannotSmoke)}></Column> */}
+                        <Column header="Joueur" body={playerBodyTemplate}></Column>
+                        <Column header="Fume" body={(rowData) => peutFumerBodyTemplate(rowData, setPlayerCannotSmoke)}></Column>
                         {checkScore && <Column field="scoreTotal" header="Score" bodyClassName="text-center"></Column>}
                     </DataTable>
                 </div>
