@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CartonButtons from './CartonButtons';
 import { InputNumber } from 'primereact/inputnumber';
 import { ToggleButton } from 'primereact/togglebutton';
+import CartonButtons from "@/pages/partie/CartonsButtons";
 
 function BoutonsJeu({ addCarton, score, setScore, firstTry, setFirstTry, nextPlayer, dernierTour, setDialVisibleFin }) {
     const onKeyEventListener = (e) => {

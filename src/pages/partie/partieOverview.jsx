@@ -97,7 +97,7 @@ const PartieOverview = () => {
                 } else {
                     setSelectedJoueur(joueurs[index + 1])
                     setPeutFumerCeTour(joueurs[index + 1].peutFumer)
-                    index === joueurs.length - 2 ? setDernierTour(true) : setDernierTour(false)
+                    index === joueurs.length - 1 ? setDernierTour(true) : setDernierTour(false)
                 }
 
             }
