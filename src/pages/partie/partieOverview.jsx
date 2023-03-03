@@ -33,7 +33,7 @@ const PartieOverview = () => {
         value: "",
         score: -1
     })
-    const [dernierTour, setDernierTour] = useState(false)
+    // const [dernierTour, setDernierTour] = useState(false)
     const router = useRouter()
 
 
@@ -97,7 +97,7 @@ const PartieOverview = () => {
                 } else {
                     setSelectedJoueur(joueurs[index + 1])
                     setPeutFumerCeTour(joueurs[index + 1].peutFumer)
-                    index === joueurs.length - 1 ? setDernierTour(true) : setDernierTour(false)
+                    // index === joueurs.length - 1 ? setDernierTour(true) : setDernierTour(false)
                 }
 
             }
@@ -206,7 +206,7 @@ const PartieOverview = () => {
                     setFirstTry={setFirstTry}
                     nextPlayer={nextPlayer}
                     setDialVisibleFin={setDialVisibleFin}
-                    dernierTour={dernierTour}
+                    // dernierTour={dernierTour}
                 />
 
             </div>

@@ -3,7 +3,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { ToggleButton } from 'primereact/togglebutton';
 import CartonButtons from "@/pages/partie/CartonsButtons";
 
-function BoutonsJeu({ addCarton, score, setScore, firstTry, setFirstTry, nextPlayer, dernierTour, setDialVisibleFin }) {
+function BoutonsJeu({ addCarton, score, setScore, firstTry, setFirstTry, nextPlayer,  setDialVisibleFin }) {
     const onKeyEventListener = (e) => {
         if (e.key === 'Enter') {
             nextPlayer();
@@ -26,7 +26,7 @@ function BoutonsJeu({ addCarton, score, setScore, firstTry, setFirstTry, nextPla
                 <button type='submit' className="p-button h-fit" onClick={nextPlayer}>Suivant</button>
                 <button className="p-button h-fit" onClick={() => {
                     setDialVisibleFin(true)
-                }} disabled={dernierTour}>Terminé
+                }} /**disabled={dernierTour}**/>Terminé
                 </button>
             </div>
         </div>
